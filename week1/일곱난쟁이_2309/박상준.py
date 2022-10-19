@@ -29,3 +29,5 @@ for combi in combinations(s_height, 7):
             print(value)
         # 강제 종료
         exit()
+
+#  시간 복잡도 : n! / r! / (n - r)!

@@ -19,3 +19,5 @@ for value in s:
     alpha_list[ord(value) - 97] += 1
 # 리스트 출력
 print(*alpha_list)
+
+# 시간 복잡도 -> O(n)

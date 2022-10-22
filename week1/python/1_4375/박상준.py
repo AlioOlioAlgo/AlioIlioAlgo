@@ -9,11 +9,22 @@
  * -----------------------------------------------------------
  * 2022-10-22        ipeac       최초 생성
  """
-# 2와 5 로 나누어 떨어지지 않는 정수 n
-# 문제 및 출력 : 1로(만) 이루어진 n의 배수 -> 각 자릿수가 모두 1로만 이루어진 n의 배수
-# 문제 자체가 이해가 안되는데?..???
-while n := int(input()):
-    while n := n * n:
-        if len(set(n)) == 1:
-            print('dd')
+while True:
+    try:
+        n = int(input())
+    except:
+        break
+    ans = 1
+    i = 1
+    if n == 1:
+        print(i)
+        continue
+    # 시간 초과가 발생했었음
+    # str => int int => str 변환하는데에  시간이 소요된 것으로 생각..
+    # 그냥 *10 곱해주고 +1 하는 식으로 int 형 안에서 해결을 해야했다
+    while True:
+        i += 1
+        ans = ans * 10 + 1
+        if ans % n == 0:
+            print(i)
             break

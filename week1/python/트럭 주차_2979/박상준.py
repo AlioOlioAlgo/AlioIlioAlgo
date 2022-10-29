@@ -29,12 +29,13 @@ for i in range(3):
 # time = [[1, 6], [3, 5], [2, 8]]
 
 
-arr = [0 for _ in range(max_time + 1)] #맥스 타임만큼의 배열 선언
+arr = [0 for _ in range(max_time + 1)]  # 맥스 타임만큼의 배열 선언
 answer = 0
 
 for start, end in time:
-    for i in range(start, end): # 입력받은 start ,end -1 타임까지 시간 배열에 count합니다.
+    for i in range(start, end):  # 입력받은 start ,end -1 타임까지 시간 배열에 count합니다.
         arr[i] += 1
+
 for value in arr:
     # 시간배열에 1 이라면 1대의 차
     # 2 라면 2대의차
@@ -46,5 +47,4 @@ for value in arr:
     else:
         answer += value * c
 print(answer)
-
 # 시간복잡도 O(n^2)

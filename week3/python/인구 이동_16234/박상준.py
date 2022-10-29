@@ -9,6 +9,8 @@
  * -----------------------------------------------------------
  * 2022-10-28        ipeac       최초 생성
  """
+from collections import deque
+
 n, l, r = map(int, input().split())
 world = [
     list(map(int, input().split()))
@@ -17,7 +19,6 @@ world = [
 # print(f"n, l, r = {n, l, r}")
 # print(f"world = {world}")
 #
-from collections import deque
 
 dx, dy = [0, 0, 1, -1], [1, -1, 0, 0]
 
@@ -45,9 +46,9 @@ def bfs(i, j):
     else:
         return -1, -1, -1
 
-max_cnt = -1
 day = 0
 while True:
+    max_cnt = -1
     visited = [[0] * n for _ in range(n)]
     
     for i in range(n):
@@ -58,9 +59,7 @@ while True:
                 if total_cnt_i < 2:
                     continue
                 value = total_population_i // total_cnt_i
-                print(f"index_repo_i = {index_repo_i}")
                 for index in index_repo_i:
-                    print(f"index = {index}")
                     world[index[0]][index[1]] = value
     if max_cnt == -1:
         break

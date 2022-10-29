@@ -48,7 +48,7 @@ def bfs():
             if 0 <= nx < r and 0 <= ny < c and not visited_f[nx][ny] and miro[nx][ny] != '#':
                 fire_queue.append([nx, ny])
                 visited_f[nx][ny] = visited_f[x][y] + 1
-    print(f"visited_f = {visited_f}")
+    # print(f"visited_f = {visited_f}")
     while jihun_queue:
         x, y = jihun_queue.popleft()
         for xx, yy in zip(dx, dy):

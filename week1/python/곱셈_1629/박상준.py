@@ -21,4 +21,4 @@ def power(a, n):
     else:
         return x * x * a % c
 
-print(power(a, b))
+print(power(a, b))  # 10 11 12

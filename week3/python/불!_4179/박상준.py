@@ -60,5 +60,6 @@ def bfs():
             # 그래프 밖으로 꾸역꾸역 기어나가는 경우 > 위험에서 벗어난거임
             else:
                 return visited_j[x][y]
+    return "IMPOSSIBLE"
 
 print(bfs())

@@ -45,4 +45,5 @@ fields = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
 dfs([], 0)
 
 print(answer)
+# https://ibb.co/kSRQnGm
 # https://velog.io/@djagmlrhks3/Algorithm-BaekJoon-14620.-%EA%BD%83%EA%B8%B8-by-Python

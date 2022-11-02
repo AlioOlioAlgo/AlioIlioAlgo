@@ -35,12 +35,18 @@ for i in range(n):
             chicken.append([i, j])
 min_chicken = 10e9
 for combi in combinations(chicken, m):
+    print(f"combi = {combi}")
     tmp = 0
     for ho in home:
         min_len = 10e9
-        
+        print(f"ho = {ho}")
         for j in range(m):
+            print(f"combi = {combi[j]}")
             min_len = min(min_len, abs(ho[0] - combi[j][0]) + abs(ho[1] - combi[j][1]))
+            print(f"min_len = {min_len}")
+        print("==========================================")
         tmp += min_len
+        print(f"tmp = {tmp}")
     min_chicken = min(min_chicken, tmp)
+    print(f"min_chicken = {min_chicken}")
 print(min_chicken)

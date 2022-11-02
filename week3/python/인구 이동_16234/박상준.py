@@ -9,16 +9,16 @@
  * -----------------------------------------------------------
  * 2022-10-28        ipeac       최초 생성
  """
+import sys
 from collections import deque
+
+input = sys.stdin.readline
 
 n, l, r = map(int, input().split())
 world = [
     list(map(int, input().split()))
     for _ in range(n)
 ]
-# print(f"n, l, r = {n, l, r}")
-# print(f"world = {world}")
-#
 
 dx, dy = [0, 0, 1, -1], [1, -1, 0, 0]
 

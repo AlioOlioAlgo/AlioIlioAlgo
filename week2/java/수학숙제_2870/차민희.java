@@ -14,8 +14,10 @@ public class _2870_math_homework {
         String line;
         nums = new ArrayList<>();
         for (int i=0; i<n; i++) {
+            //line을 입력받으며 숫자를 찾아 nums 리스트에 담음
             find(br.readLine());
         }
+        //담은 숫자를 오름차순으로 정렬
         Collections.sort(nums, new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
@@ -25,6 +27,7 @@ public class _2870_math_homework {
                 return o1.length() - o2.length();
             }
         });
+        //결과값 출력
         StringBuilder sb = new StringBuilder();
         for (String num : nums) {
             sb.append(num);
@@ -33,6 +36,10 @@ public class _2870_math_homework {
         System.out.println(sb.toString());
     }
 
+    /**
+     * 입력받은 line 에서 숫자를 찾아 nums 리스트에 담음
+     * @param line
+     */
     private static void find(String line) {
         StringBuilder sb = new StringBuilder();
         boolean isNum = false;
@@ -55,6 +62,11 @@ public class _2870_math_homework {
         }
     }
 
+    /**
+     * 숫자 앞에 0이 붙은 경우 제거. 예를 들어 001 -> 1
+     * @param num
+     * @return
+     */
     private static String noZero(String num) {
         if (num.length() == 1) {
             return num;

@@ -9,21 +9,18 @@
  * -----------------------------------------------------------
  * 2022-11-02        ipeac       최초 생성
  """
-n = int(input())
-parent = list(map(int, input().split()))
-delete = int(input())
+n = 5
+parent = [-1, 0, 0, 1, 1]
+delete = 1
 
-def dfs(delete):  # 2    value 0
+def dfs(delete):
     parent[delete] = -2
     for i in range(len(parent)):
-        # print(f"parent = {parent[i]}")
-        # print(f"delete = {delete}")
-        if parent[i] == delete:  #
+        if parent[i] == delete:
             dfs(i)
 
 dfs(delete)
 
-# print(parent)
 cnt = 0
 for i in range(len(parent)):
     if parent[i] != -2 and i not in parent:

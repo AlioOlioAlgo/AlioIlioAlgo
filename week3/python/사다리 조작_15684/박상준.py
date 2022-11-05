@@ -62,16 +62,18 @@ def make_line(sr, sc, to_choose, line_cnt):  # 로우 ,컬럼, 남은 가로선 
                     # 백트래킹
                 ladder[row][col] = 0
                 ladder[row][col + 1] = 0
-        pass
         # row하나 체크완료
         # row가 변경되면 col 은 1부터 시작해야합니다.
         sc = 1
-    pass
     return False
 
 # 0~m개 까지의 가로선을 추가하면서 게임이 끝나는지 체크한다.
 for i in range(m):
     # i 개수 만큼 가로선 추가하기
     result = make_line(1, 1, i, i)
-    
-    pass
+    # true 라면
+    if result:
+        exit()
+
+# 끝나지 않는 다면 게임이 망한거임
+print(-1)

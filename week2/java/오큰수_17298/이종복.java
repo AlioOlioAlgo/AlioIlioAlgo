@@ -22,16 +22,16 @@ public class Main {
 		}
  
       
-        for(int i=1; i<=N; i++){
+        	for(int i=1; i<=N; i++){
           
           
-          while(!stk.isEmpty() && arr[stk.peek()] < arr[i]){
-              arr[stk.pop()] = arr[i];
-          }
+          		while(!stk.isEmpty() && arr[stk.peek()] < arr[i]){
+              			arr[stk.pop()] = arr[i];
+          		}
           
          
-          stk.push(i);
-       }
+          	stk.push(i);
+       		}
       
       
       while(!stk.isEmpty()){

@@ -54,10 +54,6 @@ def make_line(start_row, start_col, to_choose, line_cnt):
                 # 가지치기
                 if make_line(start_row, start_col + 2, to_choose - 1, line_cnt):
                     return True
-                ladder[row][col] = 0
-                ladder[row][col + 1] = 0
-        start_col = 1  # 해당 행의 col 다시 돌았으니 col = 1 처리해야함
-    return False
 
 # 0~ m 개의 가로선을 놓아서 게임이 끝나는지 체크한다.
 for i in range(m):

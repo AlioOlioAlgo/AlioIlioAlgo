@@ -30,7 +30,7 @@ cheese = []
 
 # 겉돌기 가다가 1 만나면 큐에 담지않고 0으로 바꿔주기만 한다. > 나머지 순회
 def bfs(i, j):
-    q = deque([[i, j]])  # 큐에 초기 방문할 0,0 을 담는다.
+    q = deque([[i, j]])  # 디큐에 초기 방문할 0,0 을 담는다.
     visited = [[0] * n for _ in range(m)]
     visited[i][j] = 1
     cnt = 0

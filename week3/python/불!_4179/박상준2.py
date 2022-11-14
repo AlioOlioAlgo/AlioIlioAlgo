@@ -88,7 +88,6 @@ def bfs():
             nx, ny = xx + x, yy + y
             
             if 0 <= nx < r and 0 <= ny < c:
-                #
                 if not visited_j[nx][ny] and miro[nx][ny] != '#' and (visited_j[x][y] + 1 < visited_f[nx][ny] or not visited_f[nx][ny]):
                     visited_j[nx][ny] = visited_j[x][y] + 1
                     j_deque.append([nx, ny])

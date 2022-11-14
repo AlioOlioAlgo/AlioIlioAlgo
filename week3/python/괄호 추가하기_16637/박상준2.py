@@ -47,7 +47,7 @@ def solve(cnt, num, op):
         
         solve(cnt + 1, num[:], op[:])
     except:
-        0
+        pass
 
 n = int(input())
 # n = 1

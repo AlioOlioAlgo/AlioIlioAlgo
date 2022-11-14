@@ -21,7 +21,7 @@ def pos(now):
         if abs(now[i] - now[i - 1]) > 1:  # 양 그래프의 차이가 1 초과라면 오르내릴수 없기에 false처리
             return False
         if now[i] > now[i - 1]:  # 현재 값이 이전 값보다 크다 ( 오르는 길이다) 작은 쪽 now[i-1]를 기준으로 경사로 가능 여부 체크
-            for k in range(l):
+            for k in range(l):  # l : 경사로의 길이
                 if i - 1 - k < 0 or used[i - 1 - k] or now[i - 1] != now[i - 1 - k]:
                     return False
                 if now[i - 1] == now[i - 1 - k]:
@@ -42,6 +42,6 @@ for i in range(n):
 # 세로 확인
 for i in range(n):
     used = [False for _ in range(n)]
-    if pos([graph[j][i] for j in range(n)]):
+    if pos([graph[j][i] for j in range(n)]):  # n : row
         result += 1
 print(result)

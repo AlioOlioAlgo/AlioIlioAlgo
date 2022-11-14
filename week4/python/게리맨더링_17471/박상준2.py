@@ -21,32 +21,32 @@ graph = [
 ]
 
 def check(combi):
-    # print("==========================================")
-    # print(f"combi = {combi}")
+    print("==========================================")
+    print(f"combi = {combi}")
     value = combi[0]
-    # print(f"value = {value}")
+    print(f"value = {value}")
     visited = [0 for _ in range(n + 1)]
     q = deque()
     q.append(value)
     visited[value] = 1
     while q:
         x = q.popleft()
-        # print(f"x = {x}")
-        # print(f"graph = {graph[x - 1]}")
+        print(f"x = {x}")
+        print(f"graph = {graph[x - 1]}")
         for v in graph[x - 1]:
-            # print(f"v = {v}")
-            # print(f"visited = {visited}")
-            # print(f"combi = {combi}")
+            print(f"v = {v}")
+            print(f"visited = {visited}")
+            print(f"combi = {combi}")
             if not visited[v] and v in combi:
                 q.append(v)
-                # print(f"q = {q}")
+                print(f"q = {q}")
                 visited[v] = 1
-    # print(f"visited = {visited}")
+    print(f"visited = {visited}")
     for c in combi:
         if not visited[c]:
-            # print('false')
+            print('false')
             return False
-    # print('true')
+    print('true')
     return True
 
 min_diff = int(1e9)

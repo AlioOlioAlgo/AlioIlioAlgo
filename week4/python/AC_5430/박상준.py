@@ -9,36 +9,48 @@
  * -----------------------------------------------------------
  * 2022-11-08        ipeac       최초 생성
  """
-import sys
+from collections import deque
 
-input = sys.stdin.readline
 t = int(input())
-while t:
-    # print("==========================================")
-    function = list(map(str, input()))[:-1]
+# t = 4
+for _ in range(t):
+    # print(f"t = {t}")
+    function = deque(list(map(str, input())))
     # print(f"function = {function}")
-    reverse_count = function.count('R')
-    flag = False
     n = int(input())
-    arr = input()
-    arr = arr[1:len(arr) - 2].split(",")
-    if len(arr) == 1 and arr[0] == '':
-        print('error')
-        continue
-    # print(f"arr = {arr}")
+    #     print(f"n = {n}")
+    int_arr = deque(input().rstrip()[1:-1].split(","))
+    #     print(f"int_arr = {int_arr}")
+    # function = deque(['R', 'D', 'D'])
+    # n = 4
+    # int_arr = deque(['1', '2', '3', '4'])
+    # 첫번째 수를 버리는 경우 pop() <- 결국 리스트 순회
+    # 뒤집는 경우 <- 결국 리스트 순회
+    #  100,000 **  100,000
+    # 다른 방법으로
+    flag = True  # 마지막 조건 분기
+    reverse_count = 0
+    if n == 0:
+        int_arr = []
+    
     for func in function:
-        if func == 'R' and reverse_count >= 0 and reverse_count % 2 != 0:
-            arr.reverse()
-            reverse_count -= 2
+        if func == 'R':
+            reverse_count += 1
         elif func == 'D':
-            # print(f"function = {function}")
-            # print(f"len(arr) = {len(arr)}")
-            if len(arr) == 0:
+            if len(int_arr) < 1:
                 print('error')
-                flag = True
+                flag = False
                 break
-            else:
-                arr = arr[1:]
-    if not flag:
-        arr = list(map(int, arr))
-        print(arr)
+            else:  # 길이가 1이상인 경우
+                # 만약 r 이 짝수인 경우 본래의 숫자에서 앞부분
+                if reverse_count % 2 == 0:
+                    int_arr.popleft()
+                else:  # 홀수인 경우 이미 뒤집힌 상태니까 뒷 부분
+                    int_arr.pop()
+    if flag:  # 리버스 카운트
+        if reverse_count % 2 == 0:
+            pass
+        else:
+            int_arr.reverse()
+        # 무조건 에러나면 안된다.
+        print('[' + ','.join(int_arr) + ']')

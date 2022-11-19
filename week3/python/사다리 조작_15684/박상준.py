@@ -18,6 +18,8 @@
 #
 # print(f"horizontal_line = {horizontal_line}")
 # n ; 세로선의 개수 m ; 가로선 찎찍이 개수  h ; 가로선
+import pprint
+
 c, m, r = (5, 5, 6)
 ladder = [[0] * (c + 1) for _ in range(r + 1)]
 # 가로선의 위치들 a번 점선의 위치 ;b번  b세로선과 b+1 세로선 ;
@@ -40,6 +42,7 @@ def check_start_end():
         
         if col != start:
             return False
+    pprint.pprint(ladder)
     return True
 
 #  line 만큼의 선을 그어가보면서 선택이 완료된다면 check호출로 결과 확인

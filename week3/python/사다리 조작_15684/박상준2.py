@@ -32,6 +32,7 @@ def start_end_ok():
         if col != start:
             return False
     # 처음 시작점과 끝점이 같아면 `TRUE` 처리
+    print(f"ladder = {ladder}")
     return True
 
 # line 만큼의 선을 그어보면서 선택이 완료된다면 check호출로 결과 확인

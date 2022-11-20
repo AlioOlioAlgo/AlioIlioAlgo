@@ -20,7 +20,10 @@ for i in range(n):
 case.sort(key=lambda x: x[0])
 
 print(f"case = {case}")
-day = 0
 for cas in case:
+    cup = cas[1]
+    day = cas[0]
     heapq.heappush(ans, cas[1])
-    if cas[0]
+    if cas[0] < len(ans):
+        heapq.heappop(ans)
+print(sum(ans))

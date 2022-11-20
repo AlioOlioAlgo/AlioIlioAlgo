@@ -1,5 +1,5 @@
 """
- *packageName    : 
+ *packageName    :
  * fileName       : 박상준
  * author         : ipeac
  * date           : 2022-10-28
@@ -34,8 +34,7 @@ def bfs(i, j):
         x, y = q.popleft()
         for xx, yy in zip(dx, dy):
             nx, ny = xx + x, yy + y
-            if 0 <= nx < n and 0 <= ny < n and not visited[nx][ny] and l <= abs(world[x][y] - world[nx]
-            [ny]) <= r:
+            if 0 <= nx < n and 0 <= ny < n and not visited[nx][ny] and l <= abs(world[x][y] - world[nx][ny]) <= r:
                 q.append([nx, ny])
                 visited[nx][ny] = 1
                 total_population += world[nx][ny]

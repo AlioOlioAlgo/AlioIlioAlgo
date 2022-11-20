@@ -33,14 +33,14 @@ for i in range(n):
 # chi = [[0, 1], [3, 0], [4, 0], [4, 1], [4, 4]]
 
 ans = int(1e9)
-for combi in combinations(chi, m):
+for combi in combinations(chi, m):  # 남긴 치킨집의 조합 m 개의 치킨집을 골라서 치킨거리를 기산한다.
     tmp = 0
-    for ho in home:
+    for ho in home:  # 집 에서부터 치킨집까지의 치킨거리중 가장 짧은 거리를 담는 반복임
         min_chi = int(1e9)
         for i in range(m):  # 치킨
             min_chi = min(min_chi, abs(combi[i][0] - ho[0]) + abs(combi[i][1] - ho[1]))  # 해당 집의 치킨거리
         tmp += min_chi  # 모든 집을 순회하면서 치킨거리를 구한 값을 더한다.
-    # 해당값이 최솟값인지 체크한다.
+    # 해당값이 최솟값인지 체크한다. > 모든 집의 치킨거리 합이 최소가 되어야함
     ans = min(ans, tmp)
 
 print(ans)

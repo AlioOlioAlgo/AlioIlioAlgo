@@ -30,15 +30,15 @@ def bfs(n):
             cnt = visited[k]
             value += 1
             continue
+        if 0 <= 2 * x < 100001 and (not visited[2 * x] or visited[2 * x] == visited[x] + 1):
+            q.append(2 * x)
+            visited[2 * x] = visited[x] + 1
         if 0 <= x - 1 < 100001 and (not visited[x - 1] or visited[x - 1] == visited[x] + 1):
             q.append(x - 1)
             visited[x - 1] = visited[x] + 1
         if 0 <= x + 1 < 100001 and (not visited[x + 1] or visited[x + 1] == visited[x] + 1):
             q.append(x + 1)
             visited[x + 1] = visited[x] + 1
-        if 0 <= 2 * x < 100001 and (not visited[2 * x] or visited[2 * x] == visited[x] + 1):
-            q.append(2 * x)
-            visited[2 * x] = visited[x] + 1
 
 bfs(n)
 print(cnt)

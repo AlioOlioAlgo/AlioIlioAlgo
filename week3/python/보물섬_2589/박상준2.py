@@ -12,11 +12,11 @@
 from collections import deque
 
 dx, dy = [0, 0, 1, - 1], [1, -1, 0, 0]
-m, n = map(int, input().split())
+m, n = map(int, input().split())  #
 graph = [
     list(map(str, input()))
     for _ in range(m)
-]
+]  #
 
 def bfs(i, j):
     visited = [[0] * n

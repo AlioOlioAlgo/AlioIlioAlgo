@@ -9,10 +9,28 @@
  * -----------------------------------------------------------
  * 2022-11-21        ipeac       최초 생성
  """
-n, k = map(int, input().split())
-jew = [list(map(int, input().split())) for _ in range(n)]
-bag = [int(input()) for _ in range(k)]
-jew.sort(key=lambda x: (x[0], -x[1]))
-bag.sort()
-print(f"jew = {jew}")
-print(f"bag = {bag}")
+import heapq
+import sys
+
+def Solution(jew_list, max_weight_list):
+    max_weight_list.sort()
+    jew_list.sort()
+    res = 0
+    temp = []
+    
+    for bag in max_weight_list:
+        while jew_list and bag >= jew_list[0][0]:
+            heapq.heappush(temp, -jew_list[0][1])
+            heapq.heappop(jew_list)
+        
+        if temp:
+            res += heapq.heappop(temp)
+        elif not jew_list:
+            break
+    print(-res)
+
+n, k = map(int, sys.stdin.readline().split())
+
+jew_list = [list(map(int, sys.stdin.readline().split())) for _ in range(n)]
+max_weight_list = [int(sys.stdin.readline()) for _ in range(k)]
+Solution(jew_list, max_weight_list)

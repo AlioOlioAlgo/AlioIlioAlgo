@@ -19,18 +19,18 @@ def solution(music):
     start = 1
     for i in range(len(music)):
         target = music[i]
-        dis = 0
         if start > target:
             start, target = target, start
-            print(f"start = {start}")
-            print(f"target = {target}")
-            # 중복하지 않고 앞뒤 이동
-            for i in range(start, target):
-                if i not in black:
-                    dis += 1
-            start, target = target, start
-            if start in black:
+            # print(f"start = {start}")
+            # print(f"target = {target}")
+        # 중복하지 않고 앞뒤 이동
+        for j in range(start, target):
+            if j not in black:
                 dis += 1
+        if start > target:
+            start, target = target, start
+        if start in black:
+            dis += 1
         start = music[i]
     print(dis)
 
@@ -72,4 +72,4 @@ def solution(music):
 #     return ans
 #
 solution([10, 9, 4, 5, 12])
-# solution([6, 4, 2, 11])
+solution([6, 4, 2, 11])

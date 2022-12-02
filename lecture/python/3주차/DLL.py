@@ -76,10 +76,9 @@ class NodeList:  # 노드 리스트
         if self.size == 0:
             return Exception("에러")
         else:
-            print(f"self.head = {self.head.value}")
+            # print(f"self.head = {self.head.value}")
             head_value = self.head
-            print(f"head_value = {head_value.value}")
-            
+            # print(f"head_value = {head_value.value}")
             if self.head == n:
                 self.add_front(e)
                 return
@@ -89,27 +88,47 @@ class NodeList:  # 노드 리스트
             
             while head_value:
                 if head_value.next_ref == n:
+                    # print("==========================================")
                     t.prev_ref = head_value
-                    print(f"t.prev_ref = {t.prev_ref}")
+                    print(f"t.prev_ref = {t.prev_ref.value}")
                     t.next_ref = head_value.next_ref
-                    print(f"t.next_ref = {t.next_ref}")
-                    
+                    print(f"t.next_ref = {t.next_ref.value}")
+                    # print(f"head_value.next_ref.value = {head_value.next_ref.value}")
+                    # print(f"head_value.next_ref.prev_ref = {head_value.next_ref.prev_ref.value}")
+                    head_value.next_ref.prev_ref = t
                     head_value.next_ref = t
-                    head_value.next_ref.next_ref = t
-                
+                    print(f"head_value.next_ref.value = {head_value.next_ref.value}")
+                    print(f"head_value.next_ref.prev_ref = {head_value.next_ref.prev_ref.value}")
+                    self.print()
+                    return
                 head_value = head_value.next_ref
-            
-            self.print()
     
     def remove(self, n):
+        print("==========================================")
+        
+        if self.head == n:
+            self.remove_front()
+            return
+        elif self.tail == n:
+            self.remove_back()
+            return
+        
         if self.size == 0:
             return Exception("에러")
         else:
             head_value = self.head
             while head_value:
                 if head_value == n:
+                    print(f"head_value = {head_value.value}")
+                    print(f"head_value.prev_ref.value = {head_value.prev_ref.value}")
+                    print("==========================================")
                     head_value.prev_ref.next_ref = head_value.next_ref
+                    print(f"head_value = {head_value.prev_ref.next_ref.value}")
+                    print(f"head_value = {head_value.value}")
                     head_value.next_ref.prev_ref = head_value.prev_ref
+                    print(f"head_value = {head_value.next_ref.prev_ref.value}")
+                    self.print()
+                    return
                 head_value = head_value.next_ref
         self.print()
     
@@ -126,6 +145,17 @@ class NodeList:  # 노드 리스트
     
     def search_second_node(self):
         return self.head.next_ref
+    
+    def print_reserve(self):
+        if self.size == 0:
+            print('[]')
+        else:
+            tail_node = self.tail
+            print_list = []
+            while tail_node:
+                print_list.append(tail_node.value)
+                tail_node = tail_node.prev_ref
+            print(f"print_list = {print_list}")
 
 node_test = NodeList()
 node_test.add_front(1)
@@ -133,4 +163,6 @@ node_test.add_front(2)
 node_test.add_front(3)
 node_test.add_front(4)
 node_test.insert_prev(node_test.search_second_node(), 2)
+node_test.remove(node_test.search_second_node())
 node_test.print()
+node_test.print_reserve()

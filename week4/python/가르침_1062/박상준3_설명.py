@@ -23,8 +23,9 @@ words = [
 
 # 배울 수 있는 단어에서 일단 5개를 빼면 현재 배울 수 있는 글자의 개수가 된다.
 can_learn_word_cnt = k - len(must_learned)
-print(f"can_learn_word_cnt = {can_learn_word_cnt}")
-print(f"words = {words}")
+# print(f"can_learn_word_cnt = {can_learn_word_cnt}")
+# print(f"words = {words}")
+#
 # 일단 필수 단어 요소를 못채우는 경우는 절대 남극의 단어를 읽을 수 없다.
 learn = [0 for _ in range(26)]  # 알파벳 갯수만큼 일단 0 배열을 생성한다.
 
@@ -80,4 +81,3 @@ if k >= 5:
     print(ans)
 else:
     print(0)
-    exit()

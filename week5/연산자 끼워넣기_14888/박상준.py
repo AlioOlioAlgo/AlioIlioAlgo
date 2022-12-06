@@ -1,0 +1,45 @@
+"""
+ *packageName    :
+ * fileName       : 박상준
+ * author         : ipeac
+ * date           : 2022-12-06
+ * description    :
+ * ===========================================================
+ * DATE              AUTHOR             NOTE
+ * -----------------------------------------------------------
+ * 2022-12-06        ipeac       최초 생성
+ """
+n = int(input())
+numbers = list(map(int, input().split()))
+operation = list(map(int, input().split()))
+max_value = int(-1e9)
+min_value = int(1e9)
+
+def dfs(depth, total, operation):
+    global max_value
+    global min_value
+    
+    if depth == n:
+        max_value = max(max_value, total)
+        min_value = min(min_value, total)
+        return
+    if operation[0]:  # 덧셈 수행 # 고려사항 없음
+        operation[0] -= 1
+        dfs(depth + 1, total + numbers[depth], operation)
+        operation[0] += 1
+    if operation[1]:
+        operation[1] -= 1
+        dfs(depth + 1, total - numbers[depth], operation)
+        operation[1] += 1
+    if operation[2]:
+        operation[2] -= 1
+        dfs(depth + 1, total * numbers[depth], operation)
+        operation[2] += 1
+    if operation[3]:
+        operation[3] -= 1
+        dfs(depth + 1, total // numbers[depth], operation)
+        operation[3] += 1
+
+dfs(1, numbers[0], operation)
+print(max_value)
+print(min_value)

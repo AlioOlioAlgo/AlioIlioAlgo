@@ -24,7 +24,9 @@ for i in range(n):
             visited[i][j] = 1
 
 def check_queen(i, j):  # 해당위치에 queen 을 둔다면 조건에 부합하는지 체크한다.
+    print("====================check_queen======================")
     # 좌우 . 상하  . 좌우상 대각선 . 좌우하 대각선 고려
+    print(f"chess = {chess}")
     if 'Q' in chess[i]:  # 행 비교
         return False
     
@@ -43,7 +45,7 @@ def check_queen(i, j):  # 해당위치에 queen 을 둔다면 조건에 부합�
                 if chess[nx][ny] == 'Q':
                     return False
             else:
-                return False
+                break
             nx, ny = nx + dx[k], ny + dy[k]
     return True
 
@@ -51,14 +53,24 @@ ans = 0
 
 def make_queen(start_row, start_col, cnt):
     global ans
-    if cnt == m - n + 1:  # 퀸을 다 둔 경우
-        ans += 1
-        return
+    print("==========================================")
+    print(f"cnt = {cnt}")
+    print(f"start_row, start_col = {start_row, start_col}")
+    print(f"n, m = {n, m}")
+    if cnt == n - m + 1:  # 퀸을 다 둔 경우
+        print(f"ans -------------chess = {chess}")
+        print('true')
+        exit()
     for x in range(start_row, n):
         for y in range(start_col, n):
-            if check_queen(x, y)
-                pass
+            print(f"x,y = {x, y}")
+            if check_queen(x, y):  # 해당 위치에 퀸을 둘 수 있는지 체크한다.
+                chess[x][y] = 'Q'
+                make_queen(x, y + 1, cnt + 1)
+                chess[x][y] = '.'
+        start_col = 0  # 한줄을 돌면 start_col 을  0으로 맞춘다.
 
 for i in range(n):
     for j in range(n):
         make_queen(i, j, m)
+print('false')

@@ -27,17 +27,23 @@ def dfs(depth, total, operation):
         operation[0] -= 1
         dfs(depth + 1, total + numbers[depth], operation)
         operation[0] += 1
-    if operation[1]:
+    if operation[1]:  # 뺄셈 수행
         operation[1] -= 1
         dfs(depth + 1, total - numbers[depth], operation)
         operation[1] += 1
-    if operation[2]:
+    if operation[2]:  # 곱하기
         operation[2] -= 1
         dfs(depth + 1, total * numbers[depth], operation)
         operation[2] += 1
-    if operation[3]:
+    if operation[3]:  # 나눗셈 > 나눠지는 값이 음수인 경우 고려해야한다.
         operation[3] -= 1
-        dfs(depth + 1, total // numbers[depth], operation)
+        sum_total = total // numbers[depth]
+        if total < 0 and numbers[depth] >= 0:
+            total = -total
+            sum_total = total // numbers[depth]
+            sum_total = -sum_total
+        
+        dfs(depth + 1, sum_total, operation)
         operation[3] += 1
 
 dfs(1, numbers[0], operation)

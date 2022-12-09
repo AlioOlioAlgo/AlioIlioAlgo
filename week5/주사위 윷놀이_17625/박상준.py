@@ -50,4 +50,4 @@ board = [
 max_score = 0  # 최대 점수 기산
 # horse [ road에 대한 인덱스, 어떤 road 인지]
 
-play(horse, )
+dfs(horse, command, 0, 0)

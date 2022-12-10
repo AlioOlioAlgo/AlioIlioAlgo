@@ -9,46 +9,82 @@
  * -----------------------------------------------------------
  * 2022-12-09        ipeac       최초 생성
  """
+import pprint
+
 n, m = map(int, input().split())
 
 dx = [-1, 0, 1, 0]
 dy = [0, 1, 0, -1]
 
-choose = [
+cctv_direction = [
     [],  # 0
     [[0], [1], [2], [3]],  # 1
     [[0, 2], [1, 3]],  # 2
     [[0, 1], [1, 2], [2, 3], [3, 0]],  # 3
     [[0, 1, 2], [1, 2, 3], [2, 3, 0], [3, 0, 1]],  # 4
+    [[0, 1, 2, 3]],  # 5
 ]
+
+ans = int(1e9)
+
+cctv = []
+
+graph = [
+    list(map(int, input().split()))
+    for _ in range(n)
+]
+
+print(f"graph = {graph}")
+
+for i in range(n):
+    for j in range(m):
+        # print(f"graph[i][j] = {graph[i][j]}")
+        if 1 <= graph[i][j] <= 5:  # 그래프1 2 3 4 5 에 해당하는 cctv가 존재한다면
+            cctv.append([i, j, graph[i][j]])  # cctv에 해당 cctv의 위치와 어떤 종류의 cctv가 존재하는지 표기한다.
+print(f"cctv = {cctv}")
+
+ans = int(1e9)
+
+def check_zero(graph):
+    # print("===================제로 체크=======================")
+    # print()
+    pprint.pprint(graph, width=40)
+    zero_cnt = 0
+    for item in graph:
+        zero_cnt += item.count(0)
+    # print(f"zero_cnt = {zero_cnt}")
+    return zero_cnt
 
 def dfs(graph, cnt):
     global ans
-    tmp = [item[:] for item in graph]  # 2차원 배열의 깊은 복사
-    if cnt == cctv_cnt:
-        c = 0
-        for i in tmp:
-            c += i.count(0)
-        ans = min(ans, c)
+    if cnt == len(cctv):
+        ans = min(ans, check_zero(graph))  # 0 의 개수를 카운트 한다.
         return
     
-    y, x, cctv = q[cnt]
-    print(f"q[cnt] = {q[cnt]}")
-    for i in choose[cctv]:
-        pass
-
-graph = []
-cctv_cnt = 0
-q = []
-ans = int(1e9)
-for i in range(n):
-    input_data = list(map(int, input().split()))
-    graph.append(input_data)
-    for j in range(len(input_data)):
-        if input_data[j] in [1, 2, 3, 4, 5]:  # cctv에 해당하는 번호면 해당 번호와 인덱스를 담아서 저장한다.
-            cctv_cnt += 1
-            q.append([input_data[j], i, j])
+    x, y, kind = cctv[cnt]
     
-    pass
+    for direction in cctv_direction[kind]:  # choose 2차원 배열 cctv_direction[kind] > [[0, 1], [1, 2], [2, 3], [3, 0]] > direction [0, 1]
+        print("====================방향 종류======================")
+        print(f"direction = {direction}")
+        copyed_graph = [item[:] for item in graph]  # 다음 dfs로 그래프 값을 전달해주기 위함임
+        for dir in direction:  # 2차원 배열안의 dir 0 ... 1
+            print("====================하나의 cctv에서 각도 돌리는중======================")
+            print(f"dir = {dir}")
+            nx, ny = cctv[cnt][0:2]
+            while True:
+                nx, ny = nx + dx[dir], ny + dy[dir]  # 한방향으로 쭉 탐색해야하기에 nx, ny 를 계속 이어서 기산한다.
+                print(f"nx, ny = {nx, ny}")
+                if 0 <= nx < n and 0 <= ny < m:
+                    if copyed_graph[nx][ny] == 6:  # 벽을 만나는 경우 종료
+                        break
+                    elif copyed_graph[nx][ny] == 0:  # 빈 공간의 경우 '#''을 채워준다.
+                        copyed_graph[nx][ny] = '#'
+                
+                else:
+                    break
+            print("=====================다돌고 나서의 그래프 모양=====================")
+            print(f"copyed_graph = {copyed_graph}")
+        dfs(copyed_graph, cnt + 1)
 
 dfs(graph, 0)
+print(ans)

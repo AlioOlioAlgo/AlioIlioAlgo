@@ -32,25 +32,33 @@ class NodeList:  # 노드 리스트
             t.next_ref = self.head
             self.head = t
         self.size += 1
-        self.print()
+        # self.print()
     
     def remove_front(self):  # 맨 첫 번째 노드를 지운다. 이때 사이즈가 0 인경우 > 아무동작도 수행하지 않음 | 사이즈가 1이상이라면 헤드노드가 다음 노드를 참조한다.
         if self.size == 0:
             print("해당 DLL의 맨 첫 번째 노드는 존재하지 않습니다.")
             return Exception("에러")
         else:
+            # 사이즈가 1 인 경우  tail None 처리
+            if self.size == 1:
+                self.tail = None
             self.head = self.head.next_ref
+            self.head.prev_ref = None
             self.size -= 1
-        self.print()
+        # self.print()
+    
+    def back(self):
+        if self.size == 0:
+            return Exception("사이즈가 0입니다.")
+        return self.tail.value
     
     def size_of(self):
         return self.size
     
     def front(self):
+        if self.size == 0:
+            return Exception("사이즈가 0입니다.")
         return self.head.value
-    
-    def front_head(self):
-        return self.head
     
     def add_back(self, e):
         t = self.Node(e, next_ref=None, prev_ref=None)
@@ -60,6 +68,7 @@ class NodeList:  # 노드 리스트
         else:
             self.tail.next_ref = t
             t.prev_ref = self.tail
+            self.tail = t
         self.size += 1
     
     def remove_back(self):
@@ -67,11 +76,14 @@ class NodeList:  # 노드 리스트
             print("사이즈 0임 ㅡㅡ")
             return Exception("사이즈 0인데 값을 빼냐")
         else:
+            if self.size == 1:
+                self.head = None
             self.tail = self.tail.prev_ref
             self.tail.next_ref = None
         self.size -= 1
     
     def insert_prev(self, n, e):
+        print("==================insert_prev========================")
         t = self.Node(e, prev_ref=None, next_ref=None)
         if self.size == 0:
             return Exception("에러")
@@ -86,25 +98,19 @@ class NodeList:  # 노드 리스트
                 self.add_back(e)
                 return
             
-            while head_value:
-                if head_value.next_ref == n:
-                    # print("==========================================")
-                    t.prev_ref = head_value
-                    print(f"t.prev_ref = {t.prev_ref.value}")
-                    t.next_ref = head_value.next_ref
-                    print(f"t.next_ref = {t.next_ref.value}")
-                    # print(f"head_value.next_ref.value = {head_value.next_ref.value}")
-                    # print(f"head_value.next_ref.prev_ref = {head_value.next_ref.prev_ref.value}")
-                    head_value.next_ref.prev_ref = t
-                    head_value.next_ref = t
-                    print(f"head_value.next_ref.value = {head_value.next_ref.value}")
-                    print(f"head_value.next_ref.prev_ref = {head_value.next_ref.prev_ref.value}")
-                    self.print()
-                    return
-                head_value = head_value.next_ref
+            # 앞뒤 제외 중간 노드의 경우
+            #  n 이전 노드
+            prev_node = n.prev_ref
+            #  이전 노드 다음 값 => 새로운 연결
+            # n 노드 이전 값 => 새로운 연결
+            prev_node.next_ref = t
+            n.prev_ref = t
+            # 삽입할 노드의 앞뒤 연결
+            t.prev_ref = prev_node
+            t.next_ref = n
     
     def remove(self, n):
-        print("==========================================")
+        print("==================remove========================")
         
         if self.head == n:
             self.remove_front()
@@ -116,21 +122,13 @@ class NodeList:  # 노드 리스트
         if self.size == 0:
             return Exception("에러")
         else:
-            head_value = self.head
-            while head_value:
-                if head_value == n:
-                    print(f"head_value = {head_value.value}")
-                    print(f"head_value.prev_ref.value = {head_value.prev_ref.value}")
-                    print("==========================================")
-                    head_value.prev_ref.next_ref = head_value.next_ref
-                    print(f"head_value = {head_value.prev_ref.next_ref.value}")
-                    print(f"head_value = {head_value.value}")
-                    head_value.next_ref.prev_ref = head_value.prev_ref
-                    print(f"head_value = {head_value.next_ref.prev_ref.value}")
-                    self.print()
-                    return
-                head_value = head_value.next_ref
-        self.print()
+            # 사이즈 1 의 경우 이전값에서 다 걸러짐
+            prev_node = n.prev_ref
+            next_node = n.next_ref
+            
+            # 연결을 n 앞뒤로 변경한다.
+            prev_node.next_ref = next_node
+            next_node.prev_ref = prev_node
     
     def print(self):
         if self.size == 0:
@@ -162,7 +160,8 @@ node_test.add_front(1)
 node_test.add_front(2)
 node_test.add_front(3)
 node_test.add_front(4)
-node_test.insert_prev(node_test.search_second_node(), 2)
+node_test.insert_prev(node_test.search_second_node(), 7)  # print_list = [4, 7, 3, 2, 1]
+node_test.remove(node_test.search_second_node())
 node_test.remove(node_test.search_second_node())
 node_test.print()
 node_test.print_reserve()

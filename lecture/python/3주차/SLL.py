@@ -27,7 +27,7 @@ class NodeList:  # 노드 리스트
             # print("add_front size over 1")
             self.head = self.Node(e, self.head)
         self.size += 1
-        self.print()
+        # self.print()
     
     def remove_front(self):  # 맨 첫 번째 노드를 지운다. 이때 사이즈가 0 인경우 > 아무동작도 수행하지 않음 | 사이즈가 1이상이라면 헤드노드가 다음 노드를 참조한다.
         if self.size == 0:
@@ -36,12 +36,14 @@ class NodeList:  # 노드 리스트
         else:
             self.head = self.head.next_ref
             self.size -= 1
-        self.print()
+        # self.print()
     
     def size_of(self):
         return self.size
     
     def front(self):
+        if self.size == 0:
+            return Exception("리스트 size => 0")
         return self.head.value
     
     def print(self):
@@ -56,6 +58,7 @@ class NodeList:  # 노드 리스트
             print(f"print_list = {print_list}")
 
 node_test = NodeList()
+node_test.front()
 node_test.add_front(1)
 node_test.add_front(2)
 node_test.add_front(3)

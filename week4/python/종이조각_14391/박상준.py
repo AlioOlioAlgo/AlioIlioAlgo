@@ -21,7 +21,7 @@ def bitmask():
             for col in range(m):
                 # idx 는 이차원 배열을 일렬로 늘렸을때의 인덱스가 어디인지 의미
                 idx = row * m + col
-                # 가로일때
+                # 가로일때 -> 가로인 경우 i & (1<< idx)
                 if i & (1 << idx) != 0:
                     rowsum = rowsum * 10 + arr[row][col]
                 # 세로일때 앞에서 나온 수를 total에 더하고 rowsum 초기화

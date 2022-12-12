@@ -23,7 +23,7 @@ def bitmask():
                 # idx는 이차원 배열을 (비트마스킹) 일렬로 늘렸을 때 인덱스가 어디인지 의미
                 idx = row * m + col
                 # 가로 일때
-                if i & (1 << idx) != 0:
+                if i & (1 << idx) != 0:  # 1 2 3 > 1 > 1*10 + 2 ==12> 12 *10 + 3 = 123
                     row_sum = row_sum * 10 + arr[row][col]
                 # 세로일 떄 앞에서 나온 수를 total에 더하고, row sum
                 else:

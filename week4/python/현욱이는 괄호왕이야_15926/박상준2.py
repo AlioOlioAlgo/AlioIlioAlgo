@@ -21,6 +21,8 @@ for idx, value in enumerate(string):
         if stack:
             check[idx], check[stack[-1]] = 1, 1
             stack.pop()
+            print(f"check = {check}")
+print(f"check = {check}")
 
 max_length = 0
 tmp = 0

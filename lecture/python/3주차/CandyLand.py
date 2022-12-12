@@ -27,19 +27,23 @@ n = int(input())
 # print(f"arr = {arr}")
 
 def make_distinct_arr(target):
-    tmp = [i for i in range(1, target + 1)]
+    range_int = target
+    if range_int > 4:
+        range_int = 4
+    tmp = [i for i in range(1, range_int + 1)]
+    print(f"tmp = {tmp}")
     cnt = 0
     for i in range(1, target + 1):
         for combi in product(tmp, repeat=i):
             if sum(combi) == target:
-                cnt += 1
                 print(f"combi = {combi}")
+                cnt += 1
     print(f"cnt = {cnt}")
 
 if n == 0:
     print(0)
     exit()
 print(int(math.pow(2, n - 1)))
-# make_distinct_arr(n)  # 테스트 케이스 체크를 위한 함수
+make_distinct_arr(n)  # 테스트 케이스 체크를 위한 함수 n= 5
 # dp(1)
 # print(cnt)

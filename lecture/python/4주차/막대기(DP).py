@@ -11,7 +11,7 @@
  """
 
 prices = [0, 1, 5, 8, 9, 10, 17, 17, 20, 24, 30]
-stick_size = int(input())
+stick_size = int(input())  # 4
 
 stick_arr = [i for i in range(1, stick_size + 1)]
 # print(f"stick_arr = {stick_arr}")

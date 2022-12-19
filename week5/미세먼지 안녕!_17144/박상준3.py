@@ -11,5 +11,6 @@
  """
 R, C, T = map(int, input().split())  # R 줄 C
 graph = []
+
 for i in range(R):
     pass

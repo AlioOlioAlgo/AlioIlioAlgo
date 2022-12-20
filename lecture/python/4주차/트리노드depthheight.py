@@ -33,8 +33,8 @@ child3_depth1 = TreeNode(root, 4, None)
 child1_depth2 = TreeNode(child1_depth1, 6, None)
 child2_depth2 = TreeNode(child1_depth1, 6, None)
 child3_depth2 = TreeNode(child2_depth1, 6, None)
-child4_depth2 = TreeNode(child3_depth1, 6, None)
-child5_depth2 = TreeNode(child3_depth1, 6, None)
+child4_depth2 = TreeNode(child3_depth1, 2, None)
+child5_depth2 = TreeNode(child3_depth1, 3, None)
 # 0 자식의 자식 설정
 child1_depth1.append_children(child1_depth2)
 child1_depth1.append_children(child2_depth2)
@@ -53,13 +53,17 @@ def depth(find_node, cnt):
     return depth(find_node.parent, cnt + 1)
 
 def height(find_node, cnt):
-    return height(find_node)
-    pass
+    if not len(find_node.childrens):
+        return cnt
+    max_value = 0
+    for child_node in find_node.childrens:
+        max_value = max(max_value, height(child_node, cnt + 1))
+    return max_value
+    # 1. 재귀로 풀기 +
+    # 2. 반복문 으로 풀기 +
+    # depth()
+    # height()
 
-# 1. 재귀로 풀기 +
-# 2. 반복문 으로 풀기 +
-# depth()
-# height()
 #
 print(depth(child3_depth2, 0))
-print(height())
+print(height(child3_depth1, 0))

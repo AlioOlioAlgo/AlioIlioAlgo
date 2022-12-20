@@ -11,14 +11,45 @@
  """
 
 class TreeNode:
-    def __init__(self, parent=None, element=None, children=None):
+    def __init__(self, parent=None, element=None, childrens=None):
+        if childrens is None:
+            childrens = []
         self.parent = parent
         self.element = element
-        self.children = children
+        self.childrens = childrens
+    
+    # 부모 설정 함수
+    def set_parent(self, parent):
+        self.parent = parent
+    
+    # 자식 추가 함수 (자식은 여러개 가능)
+    def append_children(self, children):
+        self.childrens.append(children)
 
-root = TreeNode(None, 'a', None)
+def make_tree():
+    root = TreeNode(None, 3, None)  # 루트
+    child1_depth1 = TreeNode(root, 1, None)
+    child2_depth1 = TreeNode(root, 7, None)
+    child3_depth1 = TreeNode(root, 4, None)
+    child1_depth2 = TreeNode(child1_depth1, 6, None)
+    child2_depth2 = TreeNode(child1_depth1, 6, None)
+    child3_depth2 = TreeNode(child2_depth2, 6, None)
+    child4_depth2 = TreeNode(child3_depth2, 6, None)
+    child5_depth2 = TreeNode(child3_depth2, 6, None)
+    # 0 자식의 자식 설정
+    child1_depth1.append_children(child1_depth2)
+    child1_depth1.append_children(child2_depth2)
+    # 1 자식의 자식 설정
+    child2_depth1.append_children(child3_depth2)
+    # 2 자식의 자식 설정
+    child3_depth1.append_children(child4_depth2)
+    child3_depth1.append_children(child5_depth2)
+    
+    print(root)
+    
+    return root
 
-depth1 = TreeNode()
+make_tree()
 
 def depth(n):
     pass

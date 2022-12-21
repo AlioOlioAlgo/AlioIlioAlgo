@@ -2,52 +2,75 @@
  *packageName    :
  * fileName       : 박상준
  * author         : ipeac
- * date           : 2022-12-06
+ * date           : 2022-12-16
  * description    :
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
- * 2022-12-06        ipeac       최초 생성
+ * 2022-12-16        ipeac       최초 생성
  """
-command = list(map(int, input().split()))  # 이동할 위치에 대한 배열
-horse = [[0, 0] for _ in range(4)]  # 4개의 말에 대한 정보를 저장할 리스트 [몇번의 road에 있는지 체크, road 안의 인덱스 위치]
+grid_dict = {
+    0: [1, 2, 3, 4, 5],
+    1: [2, 3, 4, 5, 6],
+    2: [3, 4, 5, 6, 7],
+    3: [4, 5, 6, 7, 8],
+    4: [5, 6, 7, 8, 9],
+    5: [21, 22, 23, 24, 25],
+    6: [7, 8, 9, 10, 11],
+    7: [8, 9, 10, 11, 12],
+    8: [9, 10, 11, 12, 13],
+    9: [10, 11, 12, 13, 14],
+    10: [27, 28, 24, 25, 26],
+    11: [12, 13, 14, 15, 16],
+    12: [13, 14, 15, 16, 17],
+    13: [14, 15, 16, 17, 18],
+    14: [15, 16, 17, 18, 19],
+    15: [29, 30, 31, 24, 25],
+    16: [17, 18, 19, 20, -1],
+    17: [18, 19, 20, -1, -1],
+    18: [19, 20, -1, -1, -1],
+    19: [20, -1, -1, -1, -1],
+    20: [-1, -1, -1, -1, -1],
+    21: [22, 23, 24, 25, 26],
+    22: [23, 24, 25, 26, 20],
+    23: [24, 25, 26, 20, -1],
+    24: [25, 26, 20, -1, -1],
+    25: [26, 20, -1, -1, -1],
+    26: [20, -1, -1, -1, -1],
+    27: [28, 24, 25, 26, 20],
+    28: [24, 25, 26, 20, -1],
+    29: [30, 31, 24, 25, 26],
+    30: [31, 24, 25, 26, 20],
+    31: [24, 25, 26, 20, -1]
+}
+score_dict = {  # 인덱스에 맞는 점수를 이어준다.
+    -1: 0, 0: 0, 1: 2, 2: 4, 3: 6, 4: 8, 5: 10, 6: 12, 7: 14, 8: 16, 9: 18, 10: 20,
+    11: 22, 12: 24, 13: 26, 14: 28, 15: 30, 16: 32, 17: 34, 18: 36, 19: 38, 20: 40, 21: 13, 22: 16,
+    23: 19, 24: 25, 25: 30, 26: 35, 27: 22, 28: 24, 29: 28, 30: 27, 31: 26
+}
+answer = 0
+dice = list(map(int, input().split()))
 
-def dfs(save_horse, command, index, score):  # n  경우의 수 score 점수 horse 몇번째 말을 움직이고 있는 지에 대한 정보이다.
-    global max_score
-    if index == 10:  # 10가지의 경우의 수가 존재한다. 10가지를 전부 돈 경우
-        max_score = max(score, max_score)
+state = [0, 0, 0, 0]  # 주사위 마다의 위치 기록용
+
+def go(horse, count, result, state):
+    global grid_dict, score_dict, answer, dice
+    copy_state = state[:]
+    now_dice = dice[count] - 1
+    copy_state[horse] = grid_dict[copy_state[horse]][now_dice]
+    now_score = score_dict[copy_state[horse]]
+    
+    if count == 9:
+        answer = max(answer, result + now_score)
         return
-    # 4개의 말에 대해 각각 이동을 시킴으로 > 완전 탐색을 진행한다.
-    for h in range(4):
-        if save_horse[h][0] == -1:  # h 로드에 있는 말이 도착한 말이라면 연산을 무시한다.
+    
+    next_dice = dice[count + 1] - 1
+    for i in range(4):
+        if copy_state[i] == -1:  # 도착한 경우
             continue
-        save_horse[h][1] += command[index]
-        hx, hy = save_horse[h][0], save_horse[h][1]
-        
-        if hy >= len(board[hx]):  # 도착점을 넘은 경우임
-            save_horse[h][1] = -1
-            dfs(save_horse, command, index + 1, score)
-            save_horse[h][0] = hx  # 백트래킹
-            save_horse[h][1] -= command[index]
-        else:  # 도착점을 넘지 않은 경우
-            if hx == 0 and board[hx][hy] % 10 == 0 and board[hx][hy] != 40:
-                save_horse[h][0] += board[hx][hy] // 10  # 10인 경우 1로 20인 경우 2 로 30인 경우 3road 의 경우의 수를 타게된다.
-            is_duple = False
-            for i in range(4):
-                if i == h:
-                    continue
-                cx, cy = save_horse[i][0], save_horse[i][1]
-                if cx == -1:
-                    continue
-                if (hx != 0 and cx != 0) and ()
+        if grid_dict[copy_state[i]][next_dice] != -1 and grid_dict[copy_state[i]][next_dice] in copy_state:
+            continue
+        go(i, count + 1, result + now_score, copy_state)
 
-board = [
-    [i for i in range(42, 2)],
-    [2, 4, 6, 8, 10, 13, 16, 19, 25, 30, 35, 40],
-    [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 25, 30, 355, 40],
-    [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 28, 27, 26, 25, 30, 35, 40]
-]
-max_score = 0  # 최대 점수 기산
-# horse [ road에 대한 인덱스, 어떤 road 인지]
-
-dfs(horse, command, 0, 0)
+go(0, 0, 0, state)
+print(answer)

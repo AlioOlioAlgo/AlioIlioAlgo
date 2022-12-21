@@ -11,6 +11,7 @@
  """
 import heapq
 import sys
+import time
 
 def Solution(jew_list, max_weight_list):
     max_weight_list.sort()
@@ -29,8 +30,11 @@ def Solution(jew_list, max_weight_list):
             break
     print(-res)
 
+start = time.time()
 n, k = map(int, sys.stdin.readline().split())
 
 jew_list = [list(map(int, sys.stdin.readline().split())) for _ in range(n)]
 max_weight_list = [int(sys.stdin.readline()) for _ in range(k)]
 Solution(jew_list, max_weight_list)
+end = time.time()
+print(f"{end - start:.5f}")

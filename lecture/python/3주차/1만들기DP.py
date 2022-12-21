@@ -9,25 +9,23 @@
  * -----------------------------------------------------------
  * 2022-12-03        ipeac       최초 생성
  """
-import time
-from functools import cache
 
-@cache
-def dp(n, cnt):
-    print("==========================================")
-    print(f"cnt = {cnt}")
-    print(f"n = {n}")
-    if n == 1:
-        print(cnt)
-        end = time.time()
-        print(f"{end - start:.5f}sec")
-        exit()
-    if not n % 3:
-        dp(n // 3, cnt + 1)
-    if not n % 2:
-        dp(n // 2, cnt + 1)
-    dp(n - 1, cnt + 1)
-
-start = time.time()
 n = int(input())
-print(dp(n, 0))
+arr = {1: 0}
+
+def dp(n):
+    print(f"arr = {arr}")
+    print("==========================================")
+    print(f"n = {n}")
+    if n in arr.keys():
+        return arr[n]
+    if not n % 3:
+        arr[n] = min(dp(n - 1) + 1, dp(n // 3) + 1)
+    elif not n % 2:
+        arr[n] = min(dp(n - 1) + 1, dp(n // 2) + 1)
+    else:
+        arr[n] = dp(n - 1) + 1
+    return arr[n]
+
+print(dp(n))
+print("=====================정답=====================")

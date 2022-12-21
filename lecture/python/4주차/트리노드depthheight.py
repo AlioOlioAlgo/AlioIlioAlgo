@@ -27,14 +27,23 @@ class TreeNode:
         self.childrens.append(children)
 
 root = TreeNode(None, 3, None)  # 루트
+
 child1_depth1 = TreeNode(root, 1, None)
 child2_depth1 = TreeNode(root, 7, None)
 child3_depth1 = TreeNode(root, 4, None)
+
+root.append_children(child1_depth1)
+root.append_children(child2_depth1)
+root.append_children(child3_depth1)
+
 child1_depth2 = TreeNode(child1_depth1, 6, None)
 child2_depth2 = TreeNode(child1_depth1, 6, None)
+
 child3_depth2 = TreeNode(child2_depth1, 6, None)
+
 child4_depth2 = TreeNode(child3_depth1, 2, None)
 child5_depth2 = TreeNode(child3_depth1, 3, None)
+
 # 0 자식의 자식 설정
 child1_depth1.append_children(child1_depth2)
 child1_depth1.append_children(child2_depth2)
@@ -66,4 +75,4 @@ def height(find_node, cnt):
 
 #
 print(depth(child3_depth2, 0))
-print(height(child3_depth1, 0))
+print(height(child1_depth1, 0))  # height

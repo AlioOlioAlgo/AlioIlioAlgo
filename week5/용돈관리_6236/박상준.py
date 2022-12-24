@@ -15,8 +15,11 @@ draw = [
     for _ in range(N)
 ]  # N일 동안 빼낼 돈
 global_min = int(1e9)
+
 min_value, sum_value, = min(draw), sum(draw),
+
 ans = 0
+
 while min_value <= sum_value:
     mid = (min_value + sum_value) // 2
     now_money = mid

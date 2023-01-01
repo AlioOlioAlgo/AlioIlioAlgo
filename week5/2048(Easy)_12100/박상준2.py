@@ -94,10 +94,10 @@ def bfs(graph, cnt):
     else:
         for i in range(4):
             tmp_graph = [num[:] for num in graph]
-            # 0 동 1 서 2 남 3 북
-            if i == 2 and cnt == 0:
-                print("==========================================")
-                print("i==2")
+            # # 0 동 1 서 2 남 3 북
+            # if i == 2 and cnt == 0:
+            #     print("==========================================")
+            #     print("i==2")
             moved_graph = move(tmp_graph, i)
             bfs(moved_graph, cnt + 1)
 

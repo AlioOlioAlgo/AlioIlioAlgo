@@ -14,7 +14,6 @@ line_list = sorted(list(map(int, input().split())) for _ in range(n))
 # print(f"line_list = {line_list}")
 length = line_list[0][1] - line_list[0][0]
 
-start_length = line_list[0][0]
 end_length = line_list[0][1]  # 이전 값의 끝점
 
 for idx in range(1, len(line_list)):

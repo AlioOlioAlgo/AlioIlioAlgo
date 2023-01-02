@@ -10,17 +10,50 @@
  * 2023-01-01        ipeac       최초 생성
  """
 
-class MinHeap:  # 최소힙 ㅇㅇ.
+class MinHeap():  # 최소힙 ㅇㅇ.
     def __init__(self, capacity):
         self.capacity = capacity
         self.array = [0 for _ in range(self.capacity)]
         self.size = 0
     
     def min(self):
-        pass
+        return self.array[1]
+    
+    # 왼 오 자식 인덱스가 배열의 길이를 넘지 않았는지 체크하는 함수임.
+    def _has_right(self, j):
+        return self._right(j) < self.length()
+    
+    def _has_left(self, j):
+        return self._left(j) < self.length()
+    
+    def _left(self, j):
+        return 2 * j + 1
+    
+    def _right(self, j):
+        return 2 * j + 2
+    
+    def _downheap(self, j):
+        print(f"self.length() = {self.length()}")
+        if self._has_left(j):
+            left = self._left(j)  # 왼쪽 인덱스를 구합니다.
+            small_child = left
+            if self._has_right(j):
+                right = self._right(j)
+                if self.array[right + 1] < self.array[left + 1]:
+                    small_child = right
+            if self.array[small_child + 1] < self.array[j + 1]:
+                self.swap(j + 1, small_child + 1)
+                self._downheap(small_child)
     
     def remove_min(self):
-        pass
+        if not self.length():
+            raise Exception("빈 배열")
+        self.array[1] = 0
+        self.swap(1, self.size)
+        self.size -= 1
+        
+        # 왼쪽 노드 open 여부 확인
+        self._downheap(0)
     
     def add(self, element):
         if self.size > self.capacity:
@@ -48,21 +81,18 @@ class MinHeap:  # 최소힙 ㅇㅇ.
     def swap(self, swap_index1, swap_index2):
         self.array[swap_index1], self.array[swap_index2] = self.array[swap_index2], self.array[swap_index1]
 
-min_heap = MinHeap(20)
+min_heap = MinHeap(100)
 
 min_heap.add(4)
 min_heap.add(5)
 min_heap.add(6)
 min_heap.add(15)
-min_heap.add(9)
-min_heap.add(7)
-min_heap.add(16)
-min_heap.add(25)
-min_heap.add(14)
-min_heap.add(12)
-min_heap.add(11)
-min_heap.add(13)
-min_heap.add(20)
 min_heap.print_arr()
 min_heap.add(2)
+print(min_heap.min())
+print("==========================================")
+min_heap.remove_min()
+print(min_heap.length())
+min_heap.print_arr()
+print(min_heap.min())
 min_heap.print_arr()

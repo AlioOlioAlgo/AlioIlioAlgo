@@ -1,16 +1,5 @@
 """
  *packageName    :
- * fileName       : Bottom-Up Heap Construction
- * author         : ipeac
- * date           : 2023-01-03
- * description    :
- * ===========================================================
- * DATE              AUTHOR             NOTE
- * -----------------------------------------------------------
- * 2023-01-03        ipeac       최초 생성
- """
-"""
- *packageName    :
  * fileName       : Array Based Min Heap
  * author         : ipeac
  * date           : 2023-01-01
@@ -30,15 +19,24 @@ class MinHeap():  # 최소힙 ㅇㅇ.
     def min(self):
         return self.array[1]
     
+    def _parent(self, j):
+        return (j - 1) // 2  # 부모 노드 탐색
+    
+    def heapify(self, arr):
+        arr.insert(0, 0)
+        self.array = arr
+        self.size = len(arr) - 1
+        start = self._parent(self.size)  # 가장 뒤의 어레이의 부모부터 시작한다.
+        
+        for j in range(start, -1, -1):
+            self._downheap(j)
+    
     # 왼 오 자식 인덱스가 배열의 길이를 넘지 않았는지 체크하는 함수임.
     def _has_right(self, j):
         return self._right(j) < self.length()
     
     def _has_left(self, j):
         return self._left(j) < self.length()
-    
-    def _parent(self, j):
-        return (j - 1) // 2
     
     def _left(self, j):
         return 2 * j + 1
@@ -94,24 +92,8 @@ class MinHeap():  # 최소힙 ㅇㅇ.
     
     def swap(self, swap_index1, swap_index2):
         self.array[swap_index1], self.array[swap_index2] = self.array[swap_index2], self.array[swap_index1]
-    
-    def _heapify(self):
-        start = self._parent(self.length())
-        for j in range(start, -1, -1):
-            self._downheap(j)
 
-min_heap = MinHeap(100)
-
-min_heap.add(4)
-min_heap.add(5)
-min_heap.add(6)
-min_heap.add(15)
-min_heap.print_arr()
-min_heap.add(2)
-print(min_heap.min())
-print("==========================================")
-min_heap.remove_min()
-print(min_heap.length())
-min_heap.print_arr()
-print(min_heap.min())
-min_heap.print_arr()
+heap = MinHeap(100)
+arr = [10, 9, 8, 6, 7]
+heap.heapify(arr)
+heap.print_arr()

@@ -83,12 +83,15 @@ class MinHeap():  # 최소힙 ㅇㅇ.
 
 min_heap = MinHeap(100)
 
-min_heap.add(4)
-min_heap.add(5)
 min_heap.add(6)
-min_heap.add(15)
+min_heap.print_arr()
+min_heap.add(5)
+min_heap.print_arr()
+min_heap.add(4)
+
 min_heap.print_arr()
 min_heap.add(2)
+min_heap.print_arr()
 print(min_heap.min())
 print("==========================================")
 min_heap.remove_min()

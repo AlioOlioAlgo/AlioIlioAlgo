@@ -11,6 +11,8 @@
  """
 from typing import *
 
-class Solution:
-    def partitionLabels(self, s: str) -> List[int]:
-        pass
+def partitionLabels(s: str) -> List[int]:
+    alpha = {s[i]: i for i in range(len(s))}
+    print(f"alpha = {alpha}")
+
+partitionLabels("ababcbacadefegdehijhklij")

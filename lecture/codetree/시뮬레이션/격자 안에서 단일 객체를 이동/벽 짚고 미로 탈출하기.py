@@ -15,3 +15,4 @@ graph = [
     list(map(int, input().split()))
     for _ in range(n)
 ]
+# 오른손에 어떤 벽을 짚고 있는지 확인한다.

@@ -1,70 +1,50 @@
-"""
- *packageName    :
- * fileName       : 떨어지는 1자 블록
- * author         : ipeac
- * date           : 2023-01-11
- * description    :
- * ===========================================================
- * DATE              AUTHOR             NOTE
- * -----------------------------------------------------------
- * 2023-01-11        ipeac       최초 생성
- """
-import sys
-
 n = int(input())
-x, y = map(int, input().split())
+x, y = map(lambda x: int(x) - 1, input().split())
+grid = [list(input()) for _ in range(n)]
+visited = [[[False for _ in range(n)] for __ in range(n)] for ___ in range(4)]  # 각 방향에 대한 visited
 
-graph = [
-    list(input())
-    for _ in range(n)
-]
-
-# print(f"graph = {graph}")
-
-visited = [
-    [0 for _ in range(n)]
-    for _ in range(n)
-]
-
-dx = [0, -1, 0, 1]
-dy = [1, 0, -1, 0]
-
-# 동 북 서 남
-
-
-def in_range(x, y):
-    return 0 <= x < n and 0 <= y < n
-
-def is_wall(x, y):
-    return in_range(x, y) and graph[x][y] == '#'  # 벽이있고 그래프안에 없는 경우
-
-way = 0
-cnt = 0
-x -= 1
-y -= 1
-while in_range(x, y):
-    if visited[x][y]:
-        print(-1)
-        break
-    visited[x][y] = 1
-    next_x, next_y = x + dx[way], y + dy[way]
+def move(x, y):
+    dx = [0, 1, 0, -1]
+    dy = [1, 0, -1, 0]
+    curr_dir, time = 0, 0
     
-    if is_wall(next_x, next_y):  # 벽이 있고 그래프안에 있는 경우
-        # 반시계방향으로 방향을 바꾼다.
-        way += 1
-        way %= 4
-    elif not in_range(next_x, next_y):
-        x, y = next_x, next_y
-        cnt += 1
-    else:
-        rx, ry = next_x + dx[(way - 1) % 4], next_y + dy[(way - 1) % 4]  # 바로 오른쪽에 벽이 있는지 체크
-        if is_wall(rx, ry):
-            x, y = next_x, next_y
-            cnt += 1
+    while True:
+        # 이미 방문한 곳이면 더 이상 탈출 불가
+        if visited[curr_dir][x][y]:
+            return -1
+        
+        # 방문 처리
+        visited[curr_dir][x][y] = True
+        
+        nx = x + dx[curr_dir]
+        ny = y + dy[curr_dir]
+        
+        # 격자 밖으로 탈출이 가능한 경우
+        if nx < 0 or nx >= n or ny < 0 or ny >= n:
+            return time + 1
+        
+        # 바라보고 있는 방향으로 이동하는 것이 가능하지 않은 경우
+        if grid[nx][ny] == "#":
+            curr_dir = (curr_dir + 3) % 4
+        
+        # 바라보고 있는 방향으로 이동하는 것이 가능한 경우
         else:
-            x, y = rx, ry  # 2칸 이동후 90도로 꺾는다.
-            way = (way - 1) % 4
-            cnt += 2
-else:  # 밖으로 나온경우
-    print(cnt)
-    sys.exit()
+            # 그 위치로 일단 이동
+            x, y = nx, ny
+            time += 1
+            
+            # 오른쪽에 짚을 벽이 있는지 체크
+            nx = x + dx[(curr_dir + 1) % 4]
+            ny = y + dy[(curr_dir + 1) % 4]
+            
+            # 짚을 벽이 경계밖인 경우도 예외 체크를 해야 하나...???
+            if nx < 0 or nx >= n or ny < 0 or ny >= n:
+                continue
+            
+            # 오른쪽에 짚을 벽이 없다면...
+            if grid[nx][ny] != "#":
+                time += 1
+                curr_dir = (curr_dir + 1) % 4
+                x, y = nx, ny
+
+print(move(x, y))

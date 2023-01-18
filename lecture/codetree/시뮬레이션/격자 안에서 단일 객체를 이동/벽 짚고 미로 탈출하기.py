@@ -1,100 +1,70 @@
+"""
+ *packageName    :
+ * fileName       : 떨어지는 1자 블록
+ * author         : ipeac
+ * date           : 2023-01-11
+ * description    :
+ * ===========================================================
+ * DATE              AUTHOR             NOTE
+ * -----------------------------------------------------------
+ * 2023-01-11        ipeac       최초 생성
+ """
 import sys
 
-DIR_NUM = 4
-
-# 변수 선언 및 입력
 n = int(input())
-curr_x, curr_y = tuple(map(int, input().split()))
-a = [
-    [0 for _ in range(n + 1)]
-    for _ in range(n + 1)
+x, y = map(int, input().split())
+
+graph = [
+    list(input())
+    for _ in range(n)
 ]
 
-# 미로 탈출이 불가능한지 여부를 판단하기 위해
-# 동일한 위치에 동일한 방향으로 진행했던 적이 있는지를
-# 표시해주는 배열입니다.
+# print(f"graph = {graph}")
+
 visited = [
-    [
-        [False for _ in range(DIR_NUM)]
-        for _ in range(n + 1)
-    ]
-    for _ in range(n + 1)
+    [0 for _ in range(n)]
+    for _ in range(n)
 ]
-elapsed_time = 0
 
-# 처음에는 우측 방향을 바라보고 시작합니다.
-curr_dir = 0
+dx = [0, -1, 0, 1]
+dy = [1, 0, -1, 0]
 
-# 범위가 격자 안에 들어가는지 확인합니다.
+# 동 북 서 남
+
+
 def in_range(x, y):
-    return 1 <= x and x <= n and 1 <= y and y <= n
+    return 0 <= x < n and 0 <= y < n
 
-# 해당 위치에 벽이 있으면 이동이 불가합니다.
-def wall_exist(x, y):
-    return in_range(x, y) and a[x][y] == '#'
+def is_wall(x, y):
+    return in_range(x, y) and graph[x][y] == '#'  # 벽이있고 그래프안에 없는 경우
 
-# 조건에 맞춰 움직여봅니다.
-def simulate():
-    global curr_x, curr_y, curr_dir, elapsed_time
-    
-    # 현재 위치에 같은 방향으로 진행한 적이 이미 있었는지 확인합니다.
-    # 이미 한 번 겪었던 상황이라면, 탈출이 불가능 하다는 의미이므로
-    # -1을 출력하고 프로그램을 종료합니다.
-    if visited[curr_x][curr_y][curr_dir]:
+way = 0
+cnt = 0
+x -= 1
+y -= 1
+while in_range(x, y):
+    if visited[x][y]:
         print(-1)
-        sys.exit(0)
+        break
+    visited[x][y] = 1
+    next_x, next_y = x + dx[way], y + dy[way]
     
-    # 현재 상황이 다시 반복되는지를 나중에 확인하기 위해
-    # 현재 상황에 해당하는 곳에 visited 값을 True로 설정합니다.
-    visited[curr_x][curr_y][curr_dir] = True
-    
-    dxs, dys = [0, 1, 0, -1], [1, 0, -1, 0]
-    
-    next_x, next_y = curr_x + dxs[curr_dir], curr_y + dys[curr_dir]
-    
-    # Step1
-    # 바라보고 있는 방향으로 이동하는 것이 불가능한 경우에는
-    # 반 시계 방향으로 90' 방향을 바꿉니다.
-    if wall_exist(next_x, next_y):
-        curr_dir = (curr_dir - 1 + 4) % 4
-    
-    # Step2
-    # Case1
-    # 바라보고 있는 방향으로 이동하는 것이 가능한 경우 중
-    # 바로 앞이 격자 밖이라면 탈출합니다.
+    if is_wall(next_x, next_y):  # 벽이 있고 그래프안에 있는 경우
+        # 반시계방향으로 방향을 바꾼다.
+        way += 1
+        way %= 4
     elif not in_range(next_x, next_y):
-        curr_x, curr_y = next_x, next_y
-        elapsed_time += 1
-    
-    # Case 2 & Case 3
-    # 바로 앞이 격자 안에서 이동할 수 있는 곳이라면
+        x, y = next_x, next_y
+        cnt += 1
     else:
-        # 그 방향으로 이동했다 가정헀을 때 바로 오른쪽에 짚을 벽이 있는지 봅니다.
-        rx = next_x + dxs[(curr_dir + 1) % 4]
-        ry = next_y + dys[(curr_dir + 1) % 4]
-        
-        # Case2
-        # 그대로 이동해도 바로 오른쪽에 짚을 벽이 있다면
-        # 해당 방향으로 한 칸 이동합니다.
-        if wall_exist(rx, ry):
-            curr_x, curr_y = next_x, next_y
-            elapsed_time += 1
-        
-        # Case3
-        # 그렇지 않다면 2칸 이동후 방향을 시계방향으로 90' 방향을 바꿉니다.
+        rx, ry = next_x + dx[(way - 1) % 4], next_y + dy[(way - 1) % 4]  # 바로 오른쪽에 벽이 있는지 체크
+        if is_wall(rx, ry):
+            x, y = next_x, next_y
+            cnt += 1
         else:
-            curr_x, curr_y = rx, ry
-            curr_dir = (curr_dir + 1) % 4
-            elapsed_time += 2
-
-for i in range(1, n + 1):
-    given_row = input()
-    for j, elem in enumerate(given_row, start=1):
-        a[i][j] = elem
-
-# 격자를 빠져나오기 전까지 계속 반복합니다.
-while in_range(curr_x, curr_y):
-    # 조건에 맞춰 움직여봅니다.
-    simulate()
-
-print(elapsed_time)
+            x, y = rx, ry  # 2칸 이동후 90도로 꺾는다.
+            way = (way - 1) % 4
+            cnt += 2
+else:  # 밖으로 나온경우
+    print(cnt)
+    sys.exit()

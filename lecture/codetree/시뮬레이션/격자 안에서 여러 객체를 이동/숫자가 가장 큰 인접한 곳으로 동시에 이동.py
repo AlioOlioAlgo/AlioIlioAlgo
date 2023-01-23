@@ -71,12 +71,7 @@ def dup_value_remove(graph):
     return graph
 
 for _ in range(t):
-    print("==========================================")
-    print("before")
-    pprint.pprint(now_ball, width=50)
     simulate()
-    print("after")
-    pprint.pprint(now_ball, width=50)
 ans = 0
 for i in now_ball:
     ans += sum(i)

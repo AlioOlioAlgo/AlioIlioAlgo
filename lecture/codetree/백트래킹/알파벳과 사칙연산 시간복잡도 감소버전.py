@@ -34,18 +34,23 @@ for value in input_value:
 ans = -1e9
 
 def calc(combi):
-    str_code = "(" + str(combi[alpha_order[alpha[0]]])
-    for i in range(op_cnt):
-        str_code = "(" + str_code + op[i] + str(combi[alpha_order[alpha[i + 1]]]) + ")"
-    str_code += ")"
-    return str_code
+    value = combi[alpha_order[alpha[0]]]
+    for op_idx in range(op_cnt):
+        if op[op_idx] == "+":
+            value += combi[alpha_order[alpha[op_idx + 1]]]
+        elif op[op_idx] == "-":
+            value -= combi[alpha_order[alpha[op_idx + 1]]]
+        else:
+            value *= combi[alpha_order[alpha[op_idx + 1]]]
+    
+    return value
 
 combi = []
 
 def make_permutations(cnt):
     global max_value
     if cnt == 6:
-        max_value = max(max_value, eval(calc(combi)))
+        max_value = max(max_value, calc(combi))
         return
     for i in range(1, 5):
         combi.append(i)

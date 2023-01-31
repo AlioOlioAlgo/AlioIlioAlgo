@@ -24,6 +24,8 @@ def calc():
 
 def move(cnt):
     global max_score
+    max_score = max(max_score, calc())
+    
     if cnt == n:
         return
     

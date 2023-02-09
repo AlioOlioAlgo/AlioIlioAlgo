@@ -29,11 +29,12 @@ def iterable_function():
     return max_value
 
 def distance_calc(x1, x2, y1, y2):
-    return (((x1 - x2) ** 2) + ((y1 - y2) ** 2)) ** (1 / 2)
+    return ((x1 - x2) ** 2) + ((y1 - y2) ** 2)
 
 def make_point(idx, cnt):
     global min_value
     if cnt == m:
+        print(f"arr  ==> {arr}")
         min_value = min(min_value, iterable_function())
         return
     if idx == n:
@@ -44,4 +45,4 @@ def make_point(idx, cnt):
     make_point(idx + 1, cnt)
 
 make_point(0, 0)
-print(int(min_value ** 2))
+print(int(min_value))

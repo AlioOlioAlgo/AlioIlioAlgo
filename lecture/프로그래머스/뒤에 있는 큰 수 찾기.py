@@ -12,7 +12,7 @@
 
 def solution(numbers):
     answer = []
-    # 큐 + 스택
+    # 스택
     stack = []
     
     for i in range(len(numbers) - 1, -1, -1):

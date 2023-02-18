@@ -27,10 +27,11 @@ for i in range(n):
         # 내리는 길인지 오르는 길인지 체크
         # 내리는 길
         if in_range(j) and graph[i][j] > graph[i][j + 1]:  # 3 2 2
-            #
+            
             pass
         # 오르는 길
         elif in_range(j) and graph[i][j] < graph[i][j + 1]:
+            
             pass
 
 # 세로 체크

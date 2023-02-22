@@ -30,4 +30,4 @@ for i in range(n):
         else:
             left = mid + 1
 
-print(ans)
+print(-1 if ans == 1e9 else ans)

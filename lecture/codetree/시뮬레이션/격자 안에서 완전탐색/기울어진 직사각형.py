@@ -37,6 +37,8 @@ def get_score(x, y, k, l):
             # 0을 반환한다.
             if not in_range(x, y):
                 return 0
+            print(f"x, y  ==> {x, y}")
+            print(f"graph[x][y]  ==> {graph[x][y]}")
             sum_of_nums += graph[x][y]
     
     return sum_of_nums

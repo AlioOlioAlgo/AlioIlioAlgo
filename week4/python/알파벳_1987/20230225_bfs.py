@@ -9,7 +9,7 @@
  * -----------------------------------------------------------
  * 2023-02-25        ipeac       최초 생성
 """
-import sys;
+import sys
 
 input = sys.stdin.readline
 

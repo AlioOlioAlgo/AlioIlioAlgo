@@ -31,7 +31,9 @@ def connected(combi):
     
     q = deque()
     q.append((x, y))
+    
     cnt = 1
+    
     while q:
         x, y = q.popleft()
         for i in range(4):
@@ -40,6 +42,7 @@ def connected(combi):
                 visited[nx][ny] = True
                 q.append((nx, ny))
                 cnt += 1
+    
     return cnt
 
 ans = 0
@@ -48,4 +51,5 @@ for combi in combinations(range(25), 7):
         # 연결되어있는지 확인합니다.
         if connected(combi) == 7:
             ans += 1
+
 print(ans)

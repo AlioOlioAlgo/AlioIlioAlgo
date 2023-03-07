@@ -19,6 +19,11 @@ graph = [
 ]
 print(f"graph  ==> {graph}")
 
+dx, dy = [0, 0, 1, -1], [1, -1, 0, 0]
+
+def in_range(x, y):
+    return 0 <= x < n and 0 <= y < m
+
 def bfs():
     visited = [
         [False for _ in range(m)]
@@ -30,6 +35,9 @@ def bfs():
     
     while q:
         x, y = q.popleft()
+        for i in range(4):
+            nx, ny = x + dx[i], y + dy[i]
+            if in_range(nx,ny) and 
 
 for i in range(n):
     for j in range(m):

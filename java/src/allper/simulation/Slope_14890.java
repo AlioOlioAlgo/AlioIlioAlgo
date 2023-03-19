@@ -15,7 +15,7 @@ import java.util.StringTokenizer;
  * -----------------------------------------------------------
  * 2023-03-19        ipeac       최초 생성
  */
-public class Slope {
+public class Slope_14890 {
     static int n, l;
     static int[][] graph;
     static boolean[] visited; // 경사로 이미 놓아진적있으면 안되니까

@@ -44,7 +44,6 @@ public class OddHolicHosuk_20164 {
         if (word.length() == 1) {
             MAX = Math.max(MAX, total + countOdd(word));
             MIN = Math.min(MIN, total + countOdd(word));
-            bw.w
         } else if (word.length() == 2) {
             for (String s : words) {
                 value += Integer.parseInt(s);

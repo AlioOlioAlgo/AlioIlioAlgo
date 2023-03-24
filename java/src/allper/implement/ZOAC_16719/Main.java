@@ -1,9 +1,6 @@
 package allper.implement.ZOAC_16719;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * packageName    : allper.implement.ZOAC_16719
@@ -19,57 +16,53 @@ import java.util.List;
 public class Main {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
+    
+    static char[] result;
+    
     public static void main(String[] args) throws IOException {
-        String[] word = br.readLine().split("");
-        System.out.println("word = " + Arrays.toString(word));
-        List<String> makeArr = new ArrayList<>();
-        makeWord(new ArrayList<>(Arrays.asList(word)), makeArr);
-        br.close();
-        bw.flush();
-        bw.close();
+        String s = br.readLine();
+        result = new char[s.length()];
+        zoac(s, 0, s.length());
+        
     }
-
-    public static void makeWord(List<String> leftWord, List<String> makeArr) throws IOException {
-        if (leftWord.size() == 0) {
-            for (String s : makeArr) {
-                bw.write(s + "\n");
+    
+    private static void zoac(String inputWord, int startIndex, int endIndex) throws IOException {
+        if (startIndex >= endIndex) {
+            return;
+        }
+        int minIndex = Integer.MAX_VALUE;
+        char minChar = 'z' + 1;
+        for (int i = startIndex; i < endIndex; i++) {
+            char curChar = inputWord.charAt(i);
+            if (minChar > curChar) {
+                minChar = curChar;
+                minIndex = i;
             }
+        }
+        result[minIndex] = minChar;
+        String sb = removeEmpty(result);
+        bw.write(sb + "\n");
+        if (sb.length() == inputWord.length()) {
+            br.close();
+            bw.flush();
+            bw.close();
             System.exit(0);
         }
-        for (int i = 0; i < leftWord.size(); i++) {
-            String remove = leftWord.remove(i);
-            makeArr.add(remove);
-            if (checkArr(makeArr)) {
-                makeWord(leftWord, makeArr);
-            }
-            makeArr.remove(makeArr.size() - 1);
-            leftWord.add(i, remove);
-        }
-
-        return;
+        
+        zoac(inputWord, minIndex + 1, endIndex);
+        zoac(inputWord, 0, minIndex - 1);
     }
-
-    private static boolean checkArr(List<String> makeArr) {
-        if (makeArr.size() == 1) {
-            return true;
-        }
-        for (int i = 0; i < makeArr.size() - 1; i++) {
-            if ((int) makeArr.get(makeArr.size() - 2).charAt(i) < (int) makeArr.get(makeArr.size() - 1).charAt(i)) {
-                return true;
+    
+    private static String removeEmpty(char[] chars) {
+        StringBuilder sb = new StringBuilder();
+        for (char aChar : chars) {
+            if (aChar != '\0') {
+                sb.append(aChar);
+                
             }
         }
-        return false;
+        return sb.toString();
     }
-
-    // 2차원 List 출력 메소드
-    public static void print2DList(List<List<Integer>> twoDList) throws IOException {
-        bw.write("[ ");
-        for (List<Integer> row : twoDList) {
-            for (Integer value : row) {
-                bw.write(value + " ");
-            }
-            bw.newLine();
-        }
-    }
+    
+    
 }

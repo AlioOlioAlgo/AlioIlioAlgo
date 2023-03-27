@@ -19,9 +19,6 @@ import java.util.StringTokenizer;
  */
 public class Main {
     static int T;
-    static StringBuilder sb = new StringBuilder();
-    
-    static int first = -1;
     
     
     public static void main(String[] args) throws IOException {
@@ -29,46 +26,39 @@ public class Main {
         T = rd.nextInt();
         
         for (int i = 0; i < T; i++) {
-            System.out.println("=====================");
             String word = rd.next();
-            System.out.println("word = " + word);
-            checkAsc(word.toCharArray());
-            
-            sb.append(word).append("\n");
-            
-            System.out.println(sb);
+            char[] returnedChar = checkAsc(word.toCharArray());
+            System.out.println(String.valueOf(returnedChar));
         }
     }
     
-    public static void checkAsc(char[] word) {
-        //마지막 문자보다 작은 값을 탐색한다
+    public static char[] checkAsc(char[] word) {
+        boolean wordChanged = false;
+        //마지막 문자보다 작은 값을 탐색한다 -> 다만 인덱스는 그 후보중에 최댓값이여한다.
+        int curIndex = 0;
+        int first = -1;
         for (int i = word.length - 1; i > -1; i--) {
             char curChar = word[i];
             for (int j = i - 1; j > -1; j--) {
-                if (curChar > word[j]) {
-                    char changedWord = word[j];
-                    char tmp = word[i];
-                    word[i] = word[j];
-                    word[j] = tmp;
+                if (curChar > word[j] && j > first) {
                     first = j;
-                    break;
+                    curIndex = i;
+                    wordChanged = true;
                 }
             }
         }
-        System.out.println("word = " + Arrays.toString(word));
-        //변환합니다.
-        // 이후 주소를 오름차순으로 변경
-        for (int i = first + 1; i < word.length - 1; i++) {
-            for (int j = i + 1; j < word.length; j++) {
-                if (word[i] > word[j]) {
-                    char tmp = word[i];
-                    word[i] = word[j];
-                    word[j] = tmp;
-                }
-            }
+        if (wordChanged) {
+            //maxIndex와 curIndex 자리 바꿈
+            char tmp = word[curIndex];
+            word[curIndex] = word[first];
+            word[first] = tmp;
+            //변환합니다.
+            // 이후 주소를 오름차순으로 변경
+            Arrays.sort(word, first + 1, word.length);
         }
         
-        System.out.println("word = " + Arrays.toString(word));
+        return word;
+        
     }
     
     static class FastReader {

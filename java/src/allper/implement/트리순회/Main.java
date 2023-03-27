@@ -18,80 +18,44 @@ import java.util.StringTokenizer;
 public class Main {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-    static int n, ans;
+    static int n, ans, end;
     static Node[] nodes;
     static boolean[] visited;
     
     public static void main(String[] args) throws IOException {
+        FastReader rd = new FastReader();
+        n = rd.nextInt();
+        nodes = new Node[n + 10];
+        visited = new boolean[n + 10];
         
-        n = Integer.parseInt(br.readLine());
-        nodes = new Node[n + 1];
-        visited = new boolean[n + 1];
-        
-        for (int i = 0; i < n; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
-            int c = Integer.parseInt(st.nextToken());
-            Node node;
-            if (nodes[a] == null) {
-                node = new Node(a);
-                nodes[a] = node;
-            } else {
-                node = nodes[a]; // 이미존재하는 노드의 경우 해당 노드를 불러와서 left right 설정
+        for (int i = 1; i <= n; i++) {
+            nodes[i] = new Node();
+        }
+        for (int i = 1; i <= n; i++) {
+            int cur = rd.nextInt();
+            int left = rd.nextInt();
+            int right = rd.nextInt();
+            nodes[cur].setChildren(left, right);
+            if (left != -1) {
+                nodes[left].setParent(cur);
             }
-            
-            if (b != -1) {
-                if (nodes[b] == null) {
-                    Node leftNode = new Node(b);
-                    nodes[b] = leftNode;
-                    node.left = leftNode;
-                } else {
-                    node.left = nodes[b];
-                }
-            }
-            
-            if (c != -1) {
-                if (nodes[c] == null) {
-                    Node rightNode = new Node(c);
-                    nodes[c] = rightNode;
-                    node.right = rightNode;
-                } else {
-                    node.right = nodes[c];
-                }
+            if (right != -1) {
+                nodes[right].setParent(cur);
             }
         }
-        inorderTraversal(nodes[1]);
-        br.close();
-        bw.flush();
-        bw.close();
+        checkEnd(1);// 노드의 오른쪽으로 쭉쭉타서 마지막 value 값을 기억합니다. end가 그 끝값입니다.
+        
+        
     }
     
-    public static boolean allTrue(boolean[] arr) {
-        for (boolean b : arr) {
-            if (!b) {
-                return false;
-            }
-        }
-        return true;
-    }
-    
-    public static void inorderTraversal(Node curNode) {
-        if (allTrue(visited)) {
+    public static void checkEnd(int cur) {
+        end = cur;
+        if (nodes[end].right != -1) {
+            checkEnd(end);
+        } else {
             return;
         }
-        if (curNode == null) {
-            return;
-        }
-        
-        inorderTraversal(curNode.left);
-        
-        inorderTraversal(curNode.right);
-        
     }
-    
-}
-    
     
     // 2차원 List 출력 메소드
     public static void print2DList(List<List<Integer>> twoDList) throws IOException {
@@ -103,13 +67,61 @@ public class Main {
             bw.newLine();
         }
     }
+    
+    static class FastReader {
+        BufferedReader br;
+        StringTokenizer st;
+        
+        public FastReader() {
+            br = new BufferedReader(new InputStreamReader(System.in));
+        }
+        
+        String next() {
+            while (st == null || !st.hasMoreElements()) {
+                try {
+                    st = new StringTokenizer(br.readLine());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return st.nextToken();
+        }
+        
+        int nextInt() {
+            return Integer.parseInt(next());
+        }
+        
+        long nextLong() {
+            return Long.parseLong(next());
+        }
+        
+        String nextLine() {
+            String str = "";
+            try {
+                str = br.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return str;
+        }
+    }
 }
 
 class Node {
-    int value;
-    Node left, right;
+    int left, right, parent;
     
-    public Node(int value) {
-        this.value = value;
+    public Node() {
+        this.left = -1;
+        this.right = -1;
+        this.parent = -1;
+    }
+    
+    void setChildren(int left, int right) {
+        this.left = left;
+        this.right = right;
+    }
+    
+    void setParent(int parent) {
+        this.parent = parent;
     }
 }

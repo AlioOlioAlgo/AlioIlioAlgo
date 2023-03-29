@@ -50,7 +50,7 @@ public class Main {
         }
         
         zoac(inputWord, minIndex + 1, endIndex);
-        zoac(inputWord, 0, minIndex - 1);
+        zoac(inputWord, startIndex, minIndex);
     }
     
     private static String removeEmpty(char[] chars) {

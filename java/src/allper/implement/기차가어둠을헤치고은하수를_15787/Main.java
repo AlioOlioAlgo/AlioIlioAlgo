@@ -3,6 +3,9 @@ package allper.implement.기차가어둠을헤치고은하수를_15787;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 /**
@@ -46,6 +49,7 @@ public class Main {
                 for (int j = trains[train].length - 1; j > 1; j--) {
                     trains[train][j] = trains[train][j - 1];
                 }
+                trains[train][1] = 0;
             } else {
                 int train = rd.nextInt(); // 번째
                 for (int j = 1; j < trains[train].length - 2; j++) {
@@ -54,19 +58,11 @@ public class Main {
                 trains[train][trains[train].length - 1] = 0;
             }
         }
-        visited = new boolean[n + 1];
-        for (int[] train : trains) {
-            if (checkVisited(train)) {
-                ans++;
-                // 체크를 통과한다면 visited 체크
-                for (int j = 1; j < train.length - 1; j++) {
-                    if (train[j] == 1) {
-                        visited[j] = true;
-                    }
-                }
-            }
+        Set<String> set = new HashSet<>();
+        for (int i = 1; i <= n; i++) {
+            set.add(Arrays.toString(trains[i]));
         }
-        System.out.println(ans);
+        System.out.println(set.size());
     }
     
     static boolean checkVisited(int[] train) {

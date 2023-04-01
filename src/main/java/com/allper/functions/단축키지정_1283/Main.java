@@ -17,7 +17,7 @@ import java.util.StringTokenizer;
  * 2023-04-01        ipeac       최초 생성
  */
 public class Main {
-    static Map<String, Integer> check;
+    static Map<String, int[]> check;
     
     public static void main(String[] args) throws IOException {
         FastReader rd = new FastReader();
@@ -33,35 +33,36 @@ public class Main {
                 if (!check.containsKey(wo.substring(0, 1)
                                                .toLowerCase())) { // 첫글자들이 단축키에 등록이 안되어있다면 단축키 등록함.
                     check.put(wo.substring(0, 1)
-                                      .toLowerCase(), i);
-                    bw.write("[" + wo.charAt(0) + "]" + wo.substring(1));
+                                      .toLowerCase(), new int[]{j, i, 0}); // i번째 단어중에 j 단어 앞글자가 대문자임
                     flag = true;
                     break;
                 }
-                if (!flag)
-                    bw.write(wo);
-                bw.write(" ");
             }
             bw.newLine();
             if (!flag) {
                 StringTokenizer st2 = new StringTokenizer(word, " ");
                 loop1:
-                while (st2.hasMoreTokens()) {
+                for (int j = 0; j < st2.countTokens(); j++) {
                     String innerWord = st2.nextToken();
                     for (int k = 0; k < innerWord.length(); k++) {
                         String key = innerWord.substring(k, k + 1)
                                              .toLowerCase();
                         if (!check.containsKey(key)) {
                             
-                            check.put(key, i);
-                            bw.write(innerWord);
+                            check.put(key, new int[]{j, i, k});
                             break loop1;
                         }
                     }
                 }
             }
         }
+        for (Map.Entry<String, int[]> stringEntry : check.entrySet()) {
+            
+            bw.write();
+        }
         System.out.println("check = " + check);
+        
+        
         bw.close();
     }
     

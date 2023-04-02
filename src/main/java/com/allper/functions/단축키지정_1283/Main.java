@@ -58,7 +58,6 @@ public class Main {
         }
         for (Map.Entry<String, int[]> stringEntry : check.entrySet()) {
             
-            bw.write();
         }
         System.out.println("check = " + check);
         
